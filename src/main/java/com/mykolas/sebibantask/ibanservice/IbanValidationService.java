@@ -4,13 +4,10 @@ package com.mykolas.sebibantask.ibanservice;
 import com.mykolas.sebibantask.helper.IbanCodeLengthList;
 import com.mykolas.sebibantask.ibanexceptions.IncorrectIbanLengthException;
 import com.mykolas.sebibantask.ibanexceptions.NoSuchCountryCodeException;
-import com.neovisionaries.i18n.CountryCode;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class IbanValidationService {
@@ -39,5 +36,22 @@ public class IbanValidationService {
         if (ibanNumber.length() != listOfIbanLengthByCode.get(countryCodeOfIban) ){
                 throw new IncorrectIbanLengthException("Incorrect length of provided Iban according to the country code.");
         }
+
+        String[] arrayOfIbanNumberCharacters = ibanNumber.split("");
+        ArrayList<String> arrayListOfIbanNumberCharacters = new ArrayList<>();
+        Arrays.stream(arrayOfIbanNumberCharacters).map(arrayListOfIbanNumberCharacters::add).collect(Collectors.toList());
+
+        // Moving first 4 characters to the end of the String.
+        for (int i = 0; i < 4;i++){
+         String characterInArrayList = arrayListOfIbanNumberCharacters.get(0);
+         arrayListOfIbanNumberCharacters.add(characterInArrayList);
+         arrayListOfIbanNumberCharacters.remove(0);
+        }
+
+        //THis is good.
+        System.err.print(arrayListOfIbanNumberCharacters);
+
+        String rearrangedIbanNumber = arrayOfIbanNumberCharacters.toString();
+
     }
 }
