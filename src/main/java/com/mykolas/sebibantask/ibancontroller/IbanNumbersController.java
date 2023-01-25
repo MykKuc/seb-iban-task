@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@RestController("iban")
 public class IbanNumbersController {
 
     private final IbanValidationService ibanValidationService;
@@ -16,8 +16,8 @@ public class IbanNumbersController {
         this.ibanValidationService = ibanValidationService;
     }
 
-    @PostMapping
+    @PostMapping("single")
     public void validateSingleIbanNumber(String ibanNumber) {
-        ibanValidationService.validateSingleIbanNumber();
+        ibanValidationService.validateSingleIbanNumber(ibanNumber);
     }
 }
