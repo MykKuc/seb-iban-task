@@ -8,6 +8,11 @@ import java.util.Map;
 @Component
 public class IbanCodeLengthList {
 
+    /**
+     * @author Mykolas
+     * @return Returns Map with Country codes and values in the map with an appropriate
+     * required length of IBAN for that country.
+     */
 
     public Map<String,Integer> getIbanLengthByCountry() {
 

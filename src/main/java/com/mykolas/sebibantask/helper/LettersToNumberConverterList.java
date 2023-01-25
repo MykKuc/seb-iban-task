@@ -8,6 +8,10 @@ import java.util.Map;
 @Component
 public class LettersToNumberConverterList {
 
+    /**
+     * @author Mykolas
+     * @return Returns Map with letter of the alphabet as a key and the integer appropriate integer as a value.
+     */
     public Map<String,Integer> getNumberByLetterInAlphabet() {
 
         HashMap<String,Integer> numberByAlphabetCharacter = new HashMap<>();

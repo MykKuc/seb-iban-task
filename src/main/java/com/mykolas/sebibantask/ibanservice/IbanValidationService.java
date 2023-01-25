@@ -23,6 +23,18 @@ public class IbanValidationService {
         this.lettersToNumberConverterList = lettersToNumberConverterList;
     }
 
+    /**
+     * This method does the validation of IBAN. Firstly, it checks if IBAN is of correct length,
+     * if the country code at the beginning exists
+     * and correct for the appropraite country code.
+     * Secondly, it moves 4 initial characters to the end of IBAN.
+     * Thirdly, it replaces letters in IBAN to integers.
+     * Lastly, String is converted to Integer and evaluated using modulo 97.
+     *
+     * @author Mykolas
+     * @param ibanNumber
+     * @return returns boolean value if IBAN has been validated successfully.
+     */
 
     public boolean validateSingleIbanNumber(String ibanNumber) {
 

@@ -2,6 +2,10 @@ package com.mykolas.sebibantask.model;
 
 import java.util.List;
 
+/**
+ * This is Java POJO that can hold a list of Ibans.
+ */
+
 public class ListOfIbans {
 
     private List<String> ibans;
