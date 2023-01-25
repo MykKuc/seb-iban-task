@@ -15,8 +15,8 @@ public class IbanValidationService {
 
     public void validateSingleIbanNumber(String ibanNumber) {
 
-        if (ibanNumber.length() > 34){
-            throw new IncorrectIbanLengthException("Incorrect length of IBAN. Number is too long.");
+        if (ibanNumber.length() > 34 || ibanNumber.length() < 5){
+            throw new IncorrectIbanLengthException("Incorrect length of IBAN.");
         }
 
         final Set<String> ISO_COUNTRIES = Set.of(Locale.getISOCountries());
