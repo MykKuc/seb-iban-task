@@ -17,7 +17,7 @@ public class IbanNumbersController {
     }
 
     @PostMapping("single")
-    public void validateSingleIbanNumber(String ibanNumber) {
-        ibanValidationService.validateSingleIbanNumber(ibanNumber);
+    public boolean validateSingleIbanNumber(String ibanNumber) {
+       return ibanValidationService.validateSingleIbanNumber(ibanNumber);
     }
 }

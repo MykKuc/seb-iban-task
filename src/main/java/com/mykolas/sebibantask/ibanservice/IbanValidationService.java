@@ -2,24 +2,29 @@ package com.mykolas.sebibantask.ibanservice;
 
 
 import com.mykolas.sebibantask.helper.IbanCodeLengthList;
+import com.mykolas.sebibantask.helper.LettersToNumberConverterList;
 import com.mykolas.sebibantask.ibanexceptions.IncorrectIbanLengthException;
 import com.mykolas.sebibantask.ibanexceptions.NoSuchCountryCodeException;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class IbanValidationService {
 
-    private IbanCodeLengthList ibanCodeLengthList;
+    private final IbanCodeLengthList ibanCodeLengthList;
 
-    public IbanValidationService(IbanCodeLengthList ibanCodeLengthList){
+    private final LettersToNumberConverterList lettersToNumberConverterList;
+
+    public IbanValidationService(IbanCodeLengthList ibanCodeLengthList, LettersToNumberConverterList lettersToNumberConverterList){
         this.ibanCodeLengthList = ibanCodeLengthList;
+        this.lettersToNumberConverterList = lettersToNumberConverterList;
     }
 
 
-    public void validateSingleIbanNumber(String ibanNumber) {
+    public boolean validateSingleIbanNumber(String ibanNumber) {
 
         if (ibanNumber.length() > 34 || ibanNumber.length() < 5){
             throw new IncorrectIbanLengthException("Incorrect length of IBAN.");
@@ -48,10 +53,29 @@ public class IbanValidationService {
          arrayListOfIbanNumberCharacters.remove(0);
         }
 
-        //THis is good.
-        System.err.print(arrayListOfIbanNumberCharacters);
+        Map<String,Integer> letterToDigitConverterList = lettersToNumberConverterList.getNumberByLetterInAlphabet();
 
-        String rearrangedIbanNumber = arrayOfIbanNumberCharacters.toString();
+        for (int i = 0;i < arrayListOfIbanNumberCharacters.size() - 1;i++) {
 
+            String currentCharacter = arrayListOfIbanNumberCharacters.get(i);
+
+          if(!Character.isDigit(currentCharacter.charAt(0))) {
+                Integer neededInteger =  letterToDigitConverterList.get(currentCharacter);
+                arrayListOfIbanNumberCharacters.set(i,neededInteger.toString());
+          }
+        }
+
+        // Convert List into one big String and convert String to Integer.
+        String fullStringOfConvertedIban = arrayListOfIbanNumberCharacters.stream().collect(Collectors.joining(""));
+
+        BigInteger modifiedStringConvertedToBigInteger = new BigInteger(fullStringOfConvertedIban);
+        BigInteger ninetySevenNumber = new BigInteger("97");
+        BigInteger resultAfterApplyingMod = modifiedStringConvertedToBigInteger.mod(ninetySevenNumber);
+
+        if(resultAfterApplyingMod.intValue() == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

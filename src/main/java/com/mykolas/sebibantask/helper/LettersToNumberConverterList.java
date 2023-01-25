@@ -1,8 +1,11 @@
 package com.mykolas.sebibantask.helper;
 
+import org.springframework.stereotype.Component;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class LettersToNumberConverterList {
 
     public Map<String,Integer> getNumberByLetterInAlphabet() {
