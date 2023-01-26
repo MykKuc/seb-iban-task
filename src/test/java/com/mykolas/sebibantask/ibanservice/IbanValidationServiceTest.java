@@ -4,10 +4,9 @@ import com.mykolas.sebibantask.helper.IbanCodeLengthList;
 import com.mykolas.sebibantask.helper.LettersToNumberConverterList;
 import com.mykolas.sebibantask.ibanexceptions.IncorrectIbanLengthException;
 import com.mykolas.sebibantask.ibanexceptions.NoSuchCountryCodeException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,10 +18,10 @@ class IbanValidationServiceTest {
 
     private IbanValidationService ibanValidationService;
 
-    @Mock
+    @Autowired
     private IbanCodeLengthList ibanCodeLengthList;
 
-    @Mock
+    @Autowired
     private LettersToNumberConverterList lettersToNumberConverterList;
 
     @BeforeEach
@@ -40,5 +39,18 @@ class IbanValidationServiceTest {
     void should_return_NoSuchCountryCodeException() {
         String incorrectCountryCodeIbanNumber = "AA47892255255";
         assertThrows(NoSuchCountryCodeException.class, () -> ibanValidationService.validateSingleIbanNumber(incorrectCountryCodeIbanNumber));
+    }
+
+    @Test
+    void should_return_boolean_false_after_validation() {
+        String incorrectIbanNumber = "GB33BUKB20201555555558";
+        assertFalse(ibanValidationService.validateSingleIbanNumber(incorrectIbanNumber));
+
+    }
+
+    @Test
+    void should_return_boolean_true_after_validation() {
+        String correctIbanNumber = "GB33BUKB20201555555555";
+        assertTrue(ibanValidationService.validateSingleIbanNumber(correctIbanNumber));
     }
 }
