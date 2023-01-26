@@ -4,16 +4,16 @@ package com.mykolas.sebibantask.ibancontroller;
 import com.mykolas.sebibantask.ibanservice.IbanValidationService;
 import com.mykolas.sebibantask.model.ListOfIbans;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@RestController("iban")
+@RestController
+@RequestMapping("iban")
 public class IbanNumbersController {
 
     private final IbanValidationService ibanValidationService;
@@ -29,6 +29,7 @@ public class IbanNumbersController {
      * @return boolean value true if IBAN has been successfully validated.
      */
     @PostMapping("single")
+    @ResponseStatus(HttpStatus.OK)
     public boolean validateSingleIbanNumber(String ibanNumber) {
        return ibanValidationService.validateSingleIbanNumber(ibanNumber);
     }
@@ -39,6 +40,7 @@ public class IbanNumbersController {
      * @return Returns a HashMap with IBAN as a key and boolean value if IABN is valid as a value in HashMap.
      */
     @PostMapping("multiple")
+    @ResponseStatus(HttpStatus.OK)
     public Map<String,Boolean> validateListOfIbans(@RequestBody ListOfIbans listOfIbans) {
 
         Map<String,Boolean> validatePairsOfIbans = new HashMap<>();

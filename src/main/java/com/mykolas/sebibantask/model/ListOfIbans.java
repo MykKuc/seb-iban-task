@@ -10,6 +10,13 @@ public class ListOfIbans {
 
     private List<String> ibans;
 
+    public ListOfIbans() {
+    }
+
+    public ListOfIbans(List<String> ibans) {
+        this.ibans = ibans;
+    }
+
     public List<String> getIbans() {
         return ibans;
     }
@@ -18,10 +25,5 @@ public class ListOfIbans {
         this.ibans = ibans;
     }
 
-    public ListOfIbans() {
-    }
 
-    public ListOfIbans(List<String> ibans) {
-        this.ibans = ibans;
-    }
 }
