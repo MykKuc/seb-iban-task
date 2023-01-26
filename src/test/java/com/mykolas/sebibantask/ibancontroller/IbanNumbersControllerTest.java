@@ -33,13 +33,13 @@ class IbanNumbersControllerTest {
     private IbanValidationService ibanValidationService;
 
     @Test
-    void validateSingleIbanNumber() throws Exception{
+    void should_return_2xx_status_code_after_passing_single_iban() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/iban/single/").contentType(MediaType.TEXT_PLAIN).content("GB33BUKB20201555555555"))
                 .andExpect(status().is2xxSuccessful());
     }
 
     @Test
-    void validateListOfIbans () throws Exception{
+    void should_return_2xx_status_code_after_passing_json_with_ibans() throws Exception{
 
         List<String> ibanNumberList = new ArrayList<>();
         ibanNumberList.add("GB33BUKB20201555555555");
