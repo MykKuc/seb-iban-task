@@ -32,7 +32,7 @@ class IbanNumbersControllerTest {
     @MockBean
     private IbanValidationService ibanValidationService;
 
-    @Disabled
+    @Test
     void validateSingleIbanNumber() throws Exception{
         mockMvc.perform(MockMvcRequestBuilders.post("/iban/single/").contentType(MediaType.TEXT_PLAIN).content("GB33BUKB20201555555555"))
                 .andExpect(status().is2xxSuccessful());
